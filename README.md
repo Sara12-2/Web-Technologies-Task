@@ -3,14 +3,6 @@
 ## CSS Flexbox, Positioning & Selectors Practice
 ---
 
-**Course:** Web Technologies
-**Semester:** 5th Semester
-**University:** University of Layyah
-**Instructor:** Sir Safi Ullah
-**Student:** Sara Manzoor
-
----
-
 ## 📌 Assignment Overview
 
 This assignment focuses on three important CSS concepts:
@@ -178,35 +170,6 @@ The selectors are demonstrated through navigation bars, product cards, pricing s
 ![Selector1](Images/Selector1.png)
 ![Selector2](Images/Selector2.png)
 ![Selector3](Images/Selector3.png)
-
----
-
-# 📁 Project Structure
-
-```text
-Web-Technologies-Assignment/
-│
-├── Flexbox/
-│   ├── Flex Box All Properties Practice.html
-│   ├── Flexbox1.png
-│   ├── Flexbox2.png
-│   ├── Flexbox3.png
-│   └── Flexbox4.png
-│
-├── CSS Positioning/
-│   ├── Positioning Practice.html
-│   ├── positioning1.png
-│   ├── positioning2.png
-│   └── positioning3.png
-│
-├── Selectors/
-│   ├── Selectors Practice.html
-│   ├── Selector1.png
-│   ├── Selector2.png
-│   └── Selector3.png
-│
-└── README.md
-```
 
 ---
 
