@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshCart · Organic Grocery Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* =====================================================
+           1. UNIVERSAL SELECTOR
+        ===================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* =====================================================
+           ROOT — Fresh grocery palette
+        ===================================================== */
+        :root {
+            --bg: #f7f9f4;
+            --surface: #ffffff;
+            --surface-2: #f0f4ea;
+            --ink: #1a2416;
+            --ink-2: #3d4a36;
+            --ink-3: #6d7a66;
+            --line: #e2e8d9;
+
+            --leaf: #4a7c2e;
+            --leaf-2: #5d9a3a;
+            --leaf-soft: #eaf3df;
+
+            --tomato: #e63946;
+            --carrot: #f77f00;
+            --lemon: #fcbf49;
+            --berry: #9d4edd;
+            --cream: #fff8e7;
+        }
+
+        /* =====================================================
+           2. ELEMENT SELECTOR
+        ===================================================== */
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        svg { display: block; flex-shrink: 0; }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; }
+        img { max-width: 100%; display: block; }
+
+        /* =====================================================
+           3. CLASS SELECTOR — Navbar
+        ===================================================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 1rem 5%;
+
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--leaf-2), var(--leaf));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 6px 16px -4px rgba(74, 124, 46, 0.4);
+        }
+
+        .logo-text {
+            color: var(--ink);
+        }
+
+        .logo-text span {
+            color: var(--leaf);
+        }
+
+        /* =====================================================
+           NAV LINKS — descendant, sibling, pseudo-class
+        ===================================================== */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--ink-2);
+            padding: 0.55rem 0.95rem;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: var(--leaf-soft);
+            color: var(--leaf);
+        }
+
+        /* ADJACENT SIBLING — dots between links */
+        .nav-links a + a::before {
+            content: "";
+            position: absolute;
+            left: -2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--line);
+        }
+
+        /* ATTRIBUTE SELECTOR — active link */
+        .nav-links a[data-active="true"] {
+            background: var(--leaf);
+            color: white;
+        }
+
+        .nav-links a[data-active="true"]:hover {
+            background: var(--leaf-2);
+            color: white;
+        }
+
+        /* ATTRIBUTE SELECTOR — external */
+        .nav-links a[target="_blank"]::after {
+            content: " ↗";
+            font-size: 0.85em;
+            color: var(--leaf);
+            margin-left: 2px;
+        }
+
+        /* =====================================================
+           NAV ACTIONS — search + cart
+        ===================================================== */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="search"] {
+            padding: 0.6rem 1rem 0.6rem 2.4rem;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--surface-2);
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: var(--ink);
+            width: 200px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="search"]::placeholder {
+            color: var(--ink-3);
+        }
+
+        input[type="search"]:focus {
+            border-color: var(--leaf-2);
+            background: white;
+            width: 260px;
+            box-shadow: 0 0 0 4px var(--leaf-soft);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            color: var(--ink-3);
+            pointer-events: none;
+        }
+
+        .icon-btn {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-2);
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--leaf-soft);
+            color: var(--leaf);
+            border-color: var(--leaf-2);
+        }
+
+        .icon-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--tomato);
+            color: white;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        /* =====================================================
+           4. HERO SECTION
+        ===================================================== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 5% 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        /* PSEUDO-ELEMENT — decorative background */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74, 124, 46, 0.08), transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(252, 191, 73, 0.15), transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            flex: 1 1 380px;
+            max-width: 620px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.45rem 1rem;
+            background: var(--leaf-soft);
+            color: var(--leaf);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(74, 124, 46, 0.15);
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--leaf);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 800;
+            margin-bottom: 1.1rem;
+            letter-spacing: -0.035em;
+        }
+
+        .hero-content h1 em {
+            font-style: normal;
+            color: var(--leaf);
+            position: relative;
+            display: inline-block;
+        }
+
+        /* PSEUDO-ELEMENT — hand-drawn underline */
+        .hero-content h1 em::after {
+            content: "";
+            position: absolute;
+            left: -4px;
+            right: -4px;
+            bottom: 4px;
+            height: 12px;
+            background: var(--lemon);
+            border-radius: 4px;
+            z-index: -1;
+            transform: rotate(-1deg);
+        }
+
+        .hero-content > p {
+            font-size: 1.05rem;
+            color: var(--ink-2);
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.95rem 1.75rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--leaf);
+            color: white;
+            box-shadow: 0 10px 24px -8px rgba(74, 124, 46, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: var(--leaf-2);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -8px rgba(74, 124, 46, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--ink);
+            border: 1.5px solid var(--line);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--leaf);
+            color: var(--leaf);
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           HERO VISUAL — grocery basket illustration
+        ===================================================== */
+        .hero-visual {
+            position: relative;
+            z-index: 2;
+            flex: 1 1 340px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .basket-card {
+            position: relative;
+            width: 340px;
+            height: 380px;
+            background: linear-gradient(160deg, var(--cream), white);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow:
+                0 30px 60px -20px rgba(26, 36, 22, 0.15),
+                0 0 0 1px rgba(74, 124, 46, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .basket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .basket-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--ink-3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .basket-total {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--leaf);
+        }
+
+        .basket-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            flex: 1;
+        }
+
+        .basket-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            background: white;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            transition: all 0.2s ease;
+        }
+
+        .basket-item:hover {
+            border-color: var(--leaf-2);
+            transform: translateX(4px);
+        }
+
+        .basket-emoji {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .basket-emoji.a { background: #fef3e2; }
+        .basket-emoji.b { background: #f0f7ea; }
+        .basket-emoji.c { background: #fde8e8; }
+
+        .basket-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .basket-info strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .basket-info span {
+            font-size: 0.72rem;
+            color: var(--ink-3);
+        }
+
+        .basket-price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--leaf);
+            flex-shrink: 0;
+        }
+
+        .basket-footer {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--line);
+        }
+
+        .basket-checkout {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0.75rem;
+            background: var(--leaf);
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .basket-checkout:hover {
+            background: var(--leaf-2);
+        }
+
+        /* Floating fresh badge on basket */
+        .basket-badge {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            background: var(--tomato);
+            color: white;
+            padding: 0.55rem 0.95rem;
+            border-radius: 999px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px -6px rgba(230, 57, 70, 0.5);
+            transform: rotate(8deg);
+            z-index: 5;
+        }
+
+        /* =====================================================
+           5. CATEGORIES STRIP
+        ===================================================== */
+        .categories {
+            padding: 1.5rem 5% 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .cat-row {
+            display: flex;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cat-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.75rem 1.35rem;
+            background: white;
+            border: 1.5px solid var(--line);
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--ink-2);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .cat-pill:hover {
+            border-color: var(--leaf-2);
+            color: var(--leaf);
+            background: var(--leaf-soft);
+            transform: translateY(-2px);
+        }
+
+        /* PSEUDO-CLASS :nth-child — alternate pill colors */
+        .cat-pill:nth-child(3n) .cat-emoji { background: #fef3e2; }
+        .cat-pill:nth-child(3n+1) .cat-emoji { background: #f0f7ea; }
+        .cat-pill:nth-child(3n+2) .cat-emoji { background: #fde8e8; }
+
+        .cat-emoji {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            background: var(--leaf-soft);
+        }
+
+        /* =====================================================
+           6. SECTION HEADER
+        ===================================================== */
+        .section {
+            padding: 3rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.25rem;
+        }
+
+        .section-header-text h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin-bottom: 0.4rem;
+        }
+
+        .section-header-text h2 em {
+            font-style: normal;
+            color: var(--leaf);
+        }
+
+        /* PSEUDO-ELEMENT — small leaf accent before h2 */
+        .section-header-text h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--leaf);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .section-header-text p {
+            color: var(--ink-3);
+            font-size: 0.95rem;
+        }
+
+        .see-all {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--leaf);
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding-bottom: 3px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .see-all:hover {
+            gap: 10px;
+            border-bottom-color: var(--leaf);
+        }
+
+        .see-all::after {
+            content: "→";
+            transition: transform 0.25s ease;
+        }
+
+        .see-all:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* =====================================================
+           7. PRODUCT GRID
+        ===================================================== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.4rem;
+        }
+
+        /* =====================================================
+           8. PRODUCT CARD
+        ===================================================== */
+        .product-card {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--leaf-2);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 40px -16px rgba(74, 124, 46, 0.2);
+        }
+
+        /* PSEUDO-ELEMENT — top accent line */
+        .product-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--leaf), var(--lemon));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+            z-index: 3;
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* =====================================================
+           CARD IMAGE
+        ===================================================== */
+        .card-image {
+            height: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image.fruit { background: linear-gradient(160deg, #fef3e2, #fde8c8); }
+        .card-image.veg { background: linear-gradient(160deg, #f0f7ea, #e0efd2); }
+        .card-image.dairy { background: linear-gradient(160deg, #f0f7ff, #deeaf8); }
+        .card-image.bakery { background: linear-gradient(160deg, #fdf0e8, #fbe2d0); }
+
+        /* PSEUDO-ELEMENT — subtle dots */
+        .card-image::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(74, 124, 46, 0.08) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .card-emoji {
+            position: relative;
+            z-index: 2;
+            transition: transform 0.35s ease;
+        }
+
+        .product-card:hover .card-emoji {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        /* =====================================================
+           BADGE — absolute
+        ===================================================== */
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: white;
+            color: var(--ink);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 3;
+        }
+
+        /* PSEUDO-ELEMENT — colored dot */
+        .card-badge::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--leaf);
+        }
+
+        .card-badge.organic::before { background: var(--leaf); }
+        .card-badge.sale::before { background: var(--tomato); }
+        .card-badge.fresh::before { background: var(--carrot); }
+        .card-badge.local::before { background: var(--berry); }
+
+        /* =====================================================
+           WISHLIST — absolute
+        ===================================================== */
+        .wishlist {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-3);
+            z-index: 3;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .wishlist:hover {
+            background: var(--tomato);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* =====================================================
+           CARD BODY — descendant, child, adjacent selectors
+        ===================================================== */
+        .card-body {
+            padding: 1.1rem 1.15rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        /* DESCENDANT */
+        .product-card h3 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--ink);
+            transition: color 0.2s ease;
+        }
+
+        .product-card:hover h3 {
+            color: var(--leaf);
+        }
+
+        /* CHILD — direct p */
+        .card-body > p {
+            font-size: 0.83rem;
+            color: var(--ink-3);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ADJACENT SIBLING */
+        .card-body h3 + p {
+            margin-top: 0;
+        }
+
+        /* =====================================================
+           CARD META
+        ===================================================== */
+        .card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--ink-3);
+            font-weight: 500;
+        }
+
+        .rating svg { color: var(--lemon); }
+
+        .weight {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.7rem;
+            background: var(--surface-2);
+            color: var(--ink-3);
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* =====================================================
+           CARD FOOTER
+        ===================================================== */
+        .card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            margin-top: auto;
+            padding-top: 0.9rem;
+            border-top: 1px dashed var(--line);
+        }
+
+        .price-wrap {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            gap: 2px;
+        }
+
+        .price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: var(--ink);
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* nth-child price color variations */
+        .product-card:nth-child(3n) .price { color: var(--carrot); }
+        .product-card:nth-child(4n) .price { color: var(--leaf); }
+        .product-card:nth-child(5n) .price { color: var(--berry); }
+
+        .price-old {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            color: var(--ink-3);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+
+        .add-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 0.55rem 0.9rem;
+            border-radius: 999px;
+            background: var(--leaf-soft);
+            color: var(--leaf);
+            font-size: 0.78rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background: var(--leaf);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           9. FEATURES STRIP
+        ===================================================== */
+        .features {
+            padding: 3.5rem 5%;
+            background: linear-gradient(180deg, var(--surface-2), var(--bg));
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            transition: all 0.25s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--leaf-2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -8px rgba(74, 124, 46, 0.15);
+        }
+
+        .feature-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .feature-icon.f1 { background: linear-gradient(135deg, var(--leaf-2), var(--leaf)); }
+        .feature-icon.f2 { background: linear-gradient(135deg, var(--carrot), #d66a00); }
+        .feature-icon.f3 { background: linear-gradient(135deg, var(--berry), #7b2fbf); }
+        .feature-icon.f4 { background: linear-gradient(135deg, var(--tomato), #c42a36); }
+
+        .feature-text h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            color: var(--ink);
+        }
+
+        .feature-text p {
+            font-size: 0.8rem;
+            color: var(--ink-3);
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           10. SPECIAL OFFER BANNER
+        ===================================================== */
+        .offer {
+            padding: 3.5rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .offer-card {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2.75rem;
+            background: linear-gradient(135deg, var(--ink), #2a3520);
+            border-radius: 24px;
+            color: white;
+        }
+
+        /* PSEUDO-ELEMENT — decorative shape */
+        .offer-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(252, 191, 73, 0.25), transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .offer-card::after {
+            content: "";
+            position: absolute;
+            bottom: -50%;
+            left: 20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(74, 124, 46, 0.35), transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .offer-text {
+            position: relative;
+            z-index: 2;
+            flex: 1 1 340px;
+        }
+
+        .offer-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.4rem 0.9rem;
+            background: var(--lemon);
+            color: var(--ink);
+            border-radius: 999px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .offer-text h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            margin-bottom: 0.75rem;
+            font-weight: 800;
+        }
+
+        .offer-text h2 em {
+            font-style: normal;
+            color: var(--lemon);
+        }
+
+        .offer-text p {
+            color: #b8c0ae;
+            font-size: 0.95rem;
+            max-width: 480px;
+            margin-bottom: 1.5rem;
+            line-height: 1.65;
+        }
+
+        .offer-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.9rem 1.75rem;
+            background: var(--lemon);
+            color: var(--ink);
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+        }
+
+        .offer-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Countdown timer visual */
+        .offer-timer {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .timer-box {
+            min-width: 74px;
+            padding: 1rem 0.75rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .timer-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .timer-label {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.65rem;
+            color: #8892b0;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* =====================================================
+           11. NEWSLETTER
+        ===================================================== */
+        .newsletter-wrap {
+            padding: 0 5% 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .newsletter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, var(--leaf-soft), white);
+            border: 2px dashed rgba(74, 124, 46, 0.25);
+            border-radius: 20px;
+        }
+
+        .newsletter-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.4rem;
+            color: var(--ink);
+        }
+
+        .newsletter-text h3 em {
+            font-style: normal;
+            color: var(--leaf);
+        }
+
+        .newsletter-text p {
+            font-size: 0.9rem;
+            color: var(--ink-2);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.6rem;
+            flex: 1 1 340px;
+            max-width: 480px;
+        }
+
+        /* ATTRIBUTE SELECTOR — email input */
+        input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.1rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--line);
+            background: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="email"]::placeholder {
+            color: var(--ink-3);
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--leaf-2);
+            box-shadow: 0 0 0 4px var(--leaf-soft);
+        }
+
+        /* ATTRIBUTE SELECTOR — submit button */
+        button[type="submit"] {
+            padding: 0.85rem 1.5rem;
+            background: var(--leaf);
+            color: white;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--leaf-2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -6px rgba(74, 124, 46, 0.4);
+        }
+
+        /* =====================================================
+           12. FOOTER
+        ===================================================== */
+        footer {
+            background: var(--ink);
+            color: #a8b0a0;
+            padding: 3rem 5% 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-brand .logo-text {
+            color: white;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            line-height: 1.65;
+            max-width: 320px;
+            color: #8892b0;
+        }
+
+        .footer-col h5 {
+            font-family: 'Outfit', sans-serif;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 0.85rem;
+            color: #8892b0;
+            padding: 0.35rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--leaf-2);
+            padding-left: 4px;
+        }
+
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.82rem;
+            color: #8892b0;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom-links a {
+            color: #8892b0;
+            transition: color 0.2s ease;
+        }
+
+        .footer-bottom-links a:hover { color: var(--leaf-2); }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.85rem 4%;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--line);
+                margin-top: 0.5rem;
+            }
+
+            input[type="search"] {
+                width: 140px;
+            }
+
+            input[type="search"]:focus {
+                width: 180px;
+            }
+
+            .hero { padding: 3rem 4% 4rem; }
+            .basket-card { width: 300px; }
+            .offer-card { padding: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .search-wrap { display: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .newsletter-form { flex-direction: column; }
+            button[type="submit"] { width: 100%; justify-content: center; }
+        }
+
+        ::selection {
+            background: var(--leaf);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =====================================================
+         NAVBAR — Class, Attribute, Adjacent Sibling, Pseudo-class
+    ===================================================== -->
+    <header class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-mark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2 4 7l8 15 8-15-2-5z"/>
+                    <path d="M4 7h16"/>
+                    <path d="M12 7v15"/>
+                </svg>
+            </div>
+            <span class="logo-text">Fresh<span>Cart</span></span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#shop" data-active="true">Shop</a>
+            <a href="#categories">Categories</a>
+            <a href="#offers">Offers</a>
+            <a href="#about">About</a>
+            <a href="https://example.com" target="_blank">Blog</a>
+        </nav>
+
+        <div class="nav-actions">
+            <label class="search-wrap">
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </span>
+                <input type="search" placeholder="Search fruits...">
+            </label>
+            <button class="icon-btn" title="Wishlist">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+            </button>
+            <button class="icon-btn" title="Cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span class="icon-badge">3</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                Farm Fresh · Delivered Daily
+            </div>
+            <h1>
+                Fresh groceries, <em>delivered</em> to your door in 30 minutes
+            </h1>
+            <p>
+                Handpicked fruits, vegetables, dairy and bakery items — straight from
+                local farms to your kitchen. Order by 8pm, get it tomorrow morning.
+            </p>
+            <div class="hero-actions">
+                <a href="#shop" class="btn btn-primary">
+                    Shop Now
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </a>
+                <a href="#offers" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    View Offers
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="basket-card">
+                <span class="basket-badge">Fresh!</span>
+
+                <div class="basket-header">
+                    <span class="basket-title">Your Basket</span>
+                    <span class="basket-total">$24.50</span>
+                </div>
+
+                <div class="basket-items">
+                    <div class="basket-item">
+                        <div class="basket-emoji a">🍎</div>
+                        <div class="basket-info">
+                            <strong>Red Apples</strong>
+                            <span>1 kg · Organic</span>
+                        </div>
+                        <span class="basket-price">$6.99</span>
+                    </div>
+
+                    <div class="basket-item">
+                        <div class="basket-emoji b">🥬</div>
+                        <div class="basket-info">
+                            <strong>Baby Spinach</strong>
+                            <span>250 g · Local</span>
+                        </div>
+                        <span class="basket-price">$3.50</span>
+                    </div>
+
+                    <div class="basket-item">
+                        <div class="basket-emoji c">🍅</div>
+                        <div class="basket-info">
+                            <strong>Cherry Tomatoes</strong>
+                            <span>500 g · Vine-ripened</span>
+                        </div>
+                        <span class="basket-price">$4.25</span>
+                    </div>
+                </div>
+
+                <div class="basket-footer">
+                    <button class="basket-checkout">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         CATEGORIES
+    ===================================================== -->
+    <section class="categories" id="categories">
+        <div class="cat-row">
+            <div class="cat-pill">
+                <span class="cat-emoji">🍎</span>
+                Fruits
+            </div>
+            <div class="cat-pill">
+                <span class="cat-emoji">🥬</span>
+                Vegetables
+            </div>
+            <div class="cat-pill">
+                <span class="cat-emoji">🥛</span>
+                Dairy
+            </div>
+            <div class="cat-pill">
+                <span class="cat-emoji">🥖</span>
+                Bakery
+            </div>
+            <div class="cat-pill">
+                <span class="cat-emoji">🥩</span>
+                Meat
+            </div>
+            <div class="cat-pill">
+                <span class="cat-emoji">🧃</span>
+                Beverages
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         PRODUCTS — Descendant, Child, Sibling, nth-child
+    ===================================================== -->
+    <section class="section" id="shop">
+        <div class="section-header">
+            <div class="section-header-text">
+                <h2>Fresh <em>picks</em> for you</h2>
+                <p>Handpicked this morning — delivered fresh</p>
+            </div>
+            <a href="#" class="see-all">See all products</a>
+        </div>
+
+        <div class="product-grid">
+
+            <!-- Product 1 -->
+            <article class="product-card">
+                <div class="card-image fruit">
+                    <span class="card-badge organic">Organic</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🍓</span>
+                </div>
+                <div class="card-body">
+                    <h3>Fresh Strawberries</h3>
+                    <p>Sweet, juicy berries picked at peak ripeness.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.9 (124)
+                        </div>
+                        <span class="weight">500 g</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$8.99</span>
+                            <span class="price-old">$11.50</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 2 -->
+            <article class="product-card">
+                <div class="card-image veg">
+                    <span class="card-badge local">Local</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🥑</span>
+                </div>
+                <div class="card-body">
+                    <h3>Ripe Avocados</h3>
+                    <p>Creamy Hass avocados, perfect for toast and salads.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.7 (89)
+                        </div>
+                        <span class="weight">3 pcs</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$5.49</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 3 -->
+            <article class="product-card">
+                <div class="card-image dairy">
+                    <span class="card-badge fresh">Fresh</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🥛</span>
+                </div>
+                <div class="card-body">
+                    <h3>Organic Whole Milk</h3>
+                    <p>Farm-fresh, grass-fed whole milk in glass bottles.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.8 (212)
+                        </div>
+                        <span class="weight">1 L</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$4.25</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 4 -->
+            <article class="product-card">
+                <div class="card-image bakery">
+                    <span class="card-badge sale">-25%</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🥐</span>
+                </div>
+                <div class="card-body">
+                    <h3>Butter Croissants</h3>
+                    <p>Flaky, golden croissants baked fresh every morning.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.9 (167)
+                        </div>
+                        <span class="weight">4 pcs</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$6.75</span>
+                            <span class="price-old">$8.99</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 5 -->
+            <article class="product-card">
+                <div class="card-image fruit">
+                    <span class="card-badge organic">Organic</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🍊</span>
+                </div>
+                <div class="card-body">
+                    <h3>Sweet Oranges</h3>
+                    <p>Juicy navel oranges packed with vitamin C.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.6 (98)
+                        </div>
+                        <span class="weight">2 kg</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$7.50</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 6 -->
+            <article class="product-card">
+                <div class="card-image veg">
+                    <span class="card-badge local">Local</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🥕</span>
+                </div>
+                <div class="card-body">
+                    <h3>Baby Carrots</h3>
+                    <p>Crunchy, sweet baby carrots — perfect for snacking.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.8 (156)
+                        </div>
+                        <span class="weight">500 g</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$3.99</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 7 -->
+            <article class="product-card">
+                <div class="card-image dairy">
+                    <span class="card-badge fresh">Fresh</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🧀</span>
+                </div>
+                <div class="card-body">
+                    <h3>Aged Cheddar</h3>
+                    <p>Sharp, flavorful cheddar aged for 12 months.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.9 (203)
+                        </div>
+                        <span class="weight">250 g</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$9.25</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 8 -->
+            <article class="product-card">
+                <div class="card-image bakery">
+                    <span class="card-badge sale">-15%</span>
+                    <button class="wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+                    <span class="card-emoji">🍞</span>
+                </div>
+                <div class="card-body">
+                    <h3>Sourdough Loaf</h3>
+                    <p>Artisan sourdough with a crispy golden crust.</p>
+                    <div class="card-meta">
+                        <div class="rating">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5"/>
+                            </svg>
+                            4.7 (142)
+                        </div>
+                        <span class="weight">800 g</span>
+                    </div>
+                    <div class="card-foot">
+                        <div class="price-wrap">
+                            <span class="price">$5.95</span>
+                            <span class="price-old">$6.99</span>
+                        </div>
+                        <button class="add-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FEATURES — why choose us
+    ===================================================== -->
+    <section class="features">
+        <div class="feature-row">
+
+            <div class="feature-item">
+                <div class="feature-icon f1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v6"/>
+                        <path d="M12 22v-6"/>
+                        <path d="m4.93 10.93 1.41 1.41"/>
+                        <path d="M17.66 11.66l1.41-1.41"/>
+                        <path d="M2 18h2"/>
+                        <path d="M20 18h2"/>
+                        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                    </svg>
+                </div>
+                <div class="feature-text">
+                    <h4>Farm Fresh</h4>
+                    <p>Picked this morning, delivered today.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon f2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13"/>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                        <circle cx="5.5" cy="18.5" r="2.5"/>
+                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                </div>
+                <div class="feature-text">
+                    <h4>Free Delivery</h4>
+                    <p>On orders above $30. Always.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon f3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+                    </svg>
+                </div>
+                <div class="feature-text">
+                    <h4>Best Quality</h4>
+                    <p>Handpicked by our quality experts.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon f4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <div class="feature-text">
+                    <h4>Satisfaction</h4>
+                    <p>Not happy? Full refund, no questions.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =====================================================
+         OFFER BANNER
+    ===================================================== -->
+    <section class="offer" id="offers">
+        <div class="offer-card">
+            <div class="offer-text">
+                <span class="offer-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Limited Time
+                </span>
+                <h2>Get <em>30% off</em> on your first order</h2>
+                <p>
+                    Sign up today and save on fresh, organic groceries. Use code
+                    <code style="background: rgba(255,255,255,0.1); color: var(--lemon); padding: 0.15em 0.5em; border-radius: 4px; font-family: 'Roboto Mono', monospace;">FRESH30</code>
+                    at checkout.
+                </p>
+                <button class="offer-btn">
+                    Claim Offer
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="offer-timer">
+                <div class="timer-box">
+                    <div class="timer-value">02</div>
+                    <div class="timer-label">Days</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">14</div>
+                    <div class="timer-label">Hours</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">32</div>
+                    <div class="timer-label">Mins</div>
+                </div>
+                <div class="timer-box">
+                    <div class="timer-value">08</div>
+                    <div class="timer-label">Secs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+         NEWSLETTER
+    ===================================================== -->
+    <div class="newsletter-wrap">
+        <div class="newsletter">
+            <div class="newsletter-text">
+                <h3>Get <em>fresh deals</em> in your inbox</h3>
+                <p>Weekly recipes, seasonal offers, and 10% off your first order.</p>
+            </div>
+            <form class="newsletter-form" onsubmit="event.preventDefault();">
+                <input type="email" placeholder="you@example.com" required>
+                <button type="submit">
+                    Subscribe
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                        <polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+    <footer id="about">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-mark">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2 4 7l8 15 8-15-2-5z"/>
+                            <path d="M4 7h16"/>
+                            <path d="M12 7v15"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Fresh<span style="color: var(--leaf-2);">Cart</span></span>
+                </div>
+                <p>
+                    Farm-fresh groceries delivered to your door. Picked daily, delivered in 30 minutes.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h5>Shop</h5>
+                <a href="#">Fruits</a>
+                <a href="#">Vegetables</a>
+                <a href="#">Dairy</a>
+                <a href="#">Bakery</a>
+            </div>
+
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="#">About</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <div class="footer-col">
+                <h5>Support</h5>
+                <a href="#">Help Center</a>
+                <a href="#">Delivery</a>
+                <a href="#">Returns</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 FreshCart · All rights reserved</div>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
