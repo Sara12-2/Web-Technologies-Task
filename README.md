@@ -1,6 +1,7 @@
 # Web Technologies Assignment
 
 ## CSS Flexbox, Positioning & Selectors Practice
+---
 
 **Course:** Web Technologies
 **Semester:** 5th Semester
@@ -60,11 +61,8 @@ Flexbox is a **one-dimensional CSS layout system** used to arrange elements in r
 The Flexbox properties are demonstrated through practical landing-page components including navigation bars, hero sections, product grids, pricing cards, testimonials, statistics, CTA sections, and footers.
 
 ![Flexbox1](Images/Flexbox1.png)
-
 ![Flexbox2](Images/Flexbox2.png)
-
 ![Flexbox3](Images/Flexbox3.png)
-
 ![Flexbox4](Images/Flexbox4.png)
 
 ---
