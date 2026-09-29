@@ -11,19 +11,6 @@
 
 ---
 
-
-# 📌 CSS Positioning
-
-![positioning1](Images/positioning1.png)
-![positioning2](Images/positioning2.png)
-![positioning3](Images/positioning3.png)
-
-# 🎨 Selectors
-
-![Selector1](Images/Selector1.png)
-![Selector2](Images/Selector2.png)
-![Selector3](Images/Selector3.png)
-
 ## 📌 Assignment Overview
 
 This assignment focuses on three important CSS concepts:
@@ -122,11 +109,11 @@ CSS Positioning controls how an element is placed within a webpage. It can be us
 
 The positioning concepts are demonstrated through fixed navigation bars, sticky sidebars, sticky headers, floating action buttons, product badges, notification dots, decorative hero elements, and positioned UI components.
 
-![Positioning1](Images/positioning1.png)
+# 📌 CSS Positioning
 
-![Positioning2](Images/positioning2.png)
-
-![Positioning3](Images/positioning3.png)
+![positioning1](Images/positioning1.png)
+![positioning2](Images/positioning2.png)
+![positioning3](Images/positioning3.png)
 
 ---
 
@@ -186,10 +173,10 @@ This section demonstrates basic selectors, combinators, pseudo-classes, and pseu
 
 The selectors are demonstrated through navigation bars, product cards, pricing sections, forms, filter sidebars, badges, links, and other practical UI components.
 
+# 🎨 Selectors
+
 ![Selector1](Images/Selector1.png)
-
 ![Selector2](Images/Selector2.png)
-
 ![Selector3](Images/Selector3.png)
 
 ---
