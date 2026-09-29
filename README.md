@@ -11,6 +11,19 @@
 
 ---
 
+
+# 📌 CSS Positioning
+
+![positioning1](Images/positioning1.png)
+![positioning2](Images/positioning2.png)
+![positioning3](Images/positioning3.png)
+
+# 🎨 Selectors
+
+![Selector1](Images/Selector1.png)
+![Selector2](Images/Selector2.png)
+![Selector3](Images/Selector3.png)
+
 ## 📌 Assignment Overview
 
 This assignment focuses on three important CSS concepts:
@@ -59,6 +72,8 @@ Flexbox is a **one-dimensional CSS layout system** used to arrange elements in r
 ### Flexbox Practice
 
 The Flexbox properties are demonstrated through practical landing-page components including navigation bars, hero sections, product grids, pricing cards, testimonials, statistics, CTA sections, and footers.
+
+# 🧩 Flexbox
 
 ![Flexbox1](Images/Flexbox1.png)
 ![Flexbox2](Images/Flexbox2.png)
